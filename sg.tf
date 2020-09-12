@@ -1,5 +1,5 @@
 resource "aws_security_group" "rundeck" {
-  name        = "${local.prefix_name}"
+  name        = local.prefix_name
   description = "Allow HTTP/S inbound traffic"
   vpc_id      = data.aws_vpc.default.id
 
@@ -25,7 +25,7 @@ resource "aws_security_group" "rundeck" {
   tags = merge(
     var.tags,
     {
-      "Name" = format("%s %s", local.prefix_name)
+      "Name" = format("%s %s", local.prefix_name,"-lb")
     },
   )
 }
