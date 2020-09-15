@@ -25,7 +25,7 @@ resource "aws_security_group" "rundeck" {
   tags = merge(
     var.tags,
     {
-      "Name" = format("%s %s", local.prefix_name,"-lb")
+      "Name" = format("%s %s", local.prefix_name, "-lb")
     },
   )
 }

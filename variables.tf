@@ -57,11 +57,18 @@ variable "monitoring" {
 //  type        = string
 //  description = "The ID of the VPC that the instance security group belongs to"
 //}
-//
-//variable "subnet" {
-//  type        = string
-//  description = "VPC Subnet ID the instance is launched in"
-//}
+
+variable "aws_vpc" {
+  type        = list(string)
+  description = "A list of vpc"
+  default     = []
+}
+
+variable "subnet_ids" {
+  type        = list(string)
+  description = "A list of subnet IDs to launch the resources in"
+  default     = []
+}
 
 variable "security_groups" {
   description = "List of Security Group IDs allowed to connect to the instance"
@@ -72,12 +79,6 @@ variable "security_groups" {
 variable "user_data" {
   description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead."
   default     = ""
-}
-
-variable "aws_vpc" {
-  type        = list(string)
-  description = "A list of vpc"
-  default     = []
 }
 
 

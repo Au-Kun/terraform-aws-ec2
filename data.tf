@@ -37,7 +37,12 @@ data "aws_vpc" "default" {
   }
 }
 
-//data "aws_subnet" "default" {
-//  id = var.subnet
-//}
+data "aws_subnet_ids" "default" {
+  vpc_id = data.aws_vpc.default.id
+
+  filter {
+    name   = "tag:Name"
+    values = var.subnet_ids
+  }
+}
 

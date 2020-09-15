@@ -12,27 +12,27 @@ locals {
   }
 }
 
-resource "aws_instance" "windows" {
-  count = var.windows_enabled ? 1 : 0
-
-  ami           = data.aws_ami.windows.id
-  instance_type = var.instance_type
-  key_name      = var.key_name
-  monitoring    = var.monitoring
-  #availability_zone           = local.availability_zone
-  user_data            = var.user_data
-  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
-
-
-
-  tags = {
-    "Name"        = local.prefix_name
-    "tenant"      = local.common_tags.tenant
-    "tenanttype"  = local.common_tags.tenanttype
-    "environment" = local.common_tags.environment
-
-  }
-}
+//resource "aws_instance" "windows" {
+//  count = var.windows_enabled ? 1 : 0
+//
+//  ami           = data.aws_ami.windows.id
+//  instance_type = var.instance_type
+//  key_name      = var.key_name
+//  monitoring    = var.monitoring
+//  #availability_zone           = local.availability_zone
+//  user_data            = var.user_data
+//  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+//
+//
+//
+//  tags = {
+//    "Name"        = local.prefix_name
+//    "tenant"      = local.common_tags.tenant
+//    "tenanttype"  = local.common_tags.tenanttype
+//    "environment" = local.common_tags.environment
+//
+//  }
+//}
 
 
 
@@ -44,6 +44,7 @@ resource "aws_instance" "linux" {
   instance_type = var.instance_type
   key_name      = var.key_name
   monitoring    = var.monitoring
+  subnet_id     = "subnet-0e00e8fa7e8456b71"
 
 
   tags = {
