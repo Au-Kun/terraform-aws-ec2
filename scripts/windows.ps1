@@ -1,8 +1,10 @@
 <powershell>
 
-$identity = (Invoke-WebRequest -Uri http://169.254.169.254/latest/dynamic/instance-identity/document).Content | ConvertFrom-Json
+$DN = "alturamso.com"
+$ServerName = "AMOMNISRC"
 
-$identity.instanceId
+Install-WindowsFeature RSAT-AD-PowerShell
 
+Add-Computer -DomainName $DN -NewName $ServerName -Credential (New-Object -TypeName PSCredential -ArgumentList "<DomainUSER>",(ConvertTo-SecureString -String '<DomainPW>' -AsPlainText -Force)[0]) -Restart
 
 </powershell>

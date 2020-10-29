@@ -30,19 +30,15 @@ data "aws_ami" "windows" {
 
 data "aws_vpc" "default" {
   default = false
-
-  filter {
-    name   = "tag:Name"
-    values = var.aws_vpc
-  }
+  id      = var.aws_vpc
 }
 
-data "aws_subnet_ids" "default" {
-  vpc_id = data.aws_vpc.default.id
+# data "aws_subnet_id" "default" {
+#   vpc_id = data.aws_vpc.default.id
 
-  filter {
-    name   = "tag:Name"
-    values = var.subnet_ids
-  }
-}
+#   filter {
+#     name   = "tag:Name"
+#     values = var.subnet_id
+#   }
+# }
 

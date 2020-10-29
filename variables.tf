@@ -21,7 +21,6 @@ variable "windows_image_id" {
   default     = ""
 }
 
-
 variable "windows_enabled" {
   type        = bool
   description = "Whether to create the resources. Set to `false` to prevent the module from creating any resources"
@@ -33,7 +32,6 @@ variable "linux_enabled" {
   description = "Whether to create the resources. Set to `false` to prevent the module from creating any resources"
   default     = false
 }
-
 
 variable "instance_type" {
   type        = string
@@ -47,10 +45,17 @@ variable "key_name" {
   default     = ""
 }
 
-variable "monitoring" {
+variable "detailed_monitoring" {
   type        = bool
   description = "Whether to enable detailed monitoring. Set to 'true' to enable. Default value set to false"
   default     = false
+}
+
+variable "disable_instance_termination" {
+  type        = bool
+  description = "If true, enables EC2 Instance Termination Protection"
+  default     = "false"
+
 }
 
 //variable "vpc_id" {
@@ -59,16 +64,22 @@ variable "monitoring" {
 //}
 
 variable "aws_vpc" {
-  type        = list(string)
+  type        = string
   description = "A list of vpc"
-  default     = []
+  default     = ""
 }
 
-variable "subnet_ids" {
-  type        = list(string)
-  description = "A list of subnet IDs to launch the resources in"
-  default     = []
+variable "subnet_id" {
+  type        = string
+  description = "subnet ID to launch the resources in"
+  default     = ""
 }
+
+# variable "subnet_id" {
+#   type        = list(string)
+#   description = "A list of subnet IDs to launch the resources in"
+#   default     = [""]
+# }
 
 variable "security_groups" {
   description = "List of Security Group IDs allowed to connect to the instance"
@@ -81,9 +92,85 @@ variable "user_data" {
   default     = ""
 }
 
+variable "availability_zone" {
+  type        = string
+  description = "The AZ where the resource will exist"
+  default     = "us-west-2b"
+}
 
+###【VOLUMES】###
 
+variable "root_volume_type" {
+  type        = string
+  description = "The type of volume. 'gp2', 'io1', 'io2', 'sc1', or 'st1'. (Default: 'gp2')."
+  default     = "gp2"
+}
 
+variable "root_volume_size" {
+  type        = number
+  description = "The size of the volume in gibibytes"
+  default     = 60
+}
+
+variable "delete_on_termination" {
+  type        = bool
+  description = "Whether the volume should be destroyed on instance termination (Default: false)"
+  default     = false
+}
+
+variable "ebs_encrypted" {
+  type        = bool
+  description = "Enable volume encryption. (Default: false)"
+  default     = false
+}
+
+variable "kms_key_id" {
+  type        = string
+  description = "Amazon Resource Name (ARN) of the KMS Key to use when encrypting the volume"
+  default     = ""
+}
+
+variable "ebs_volume_count" {
+  type        = number
+  description = "The number of ebs volume to create"
+  default     = 0
+}
+
+variable "ebs_log_volume_size" {
+  type        = number
+  description = "The size of the drive in GiBs"
+  default     = 60
+}
+
+variable "ebs_iops" {
+  type        = string
+  description = "The amount of IOPS to provision for the disk. Only valid for type of io1 or io2"
+  default     = ""
+}
+
+variable "ebs_volume_type" {
+  type        = string
+  description = "The type of EBS volume. Can be 'standard', 'gp2', 'io1', 'io2', 'sc1' or 'st1' (Default: 'gp2')"
+  default     = "gp2"
+}
+
+variable "ebs_device_name" {
+  type        = list(string)
+  description = "Name of the EBS device to mount"
+  default     = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd", "/dev/xvde", "/dev/xvdf", "/dev/xvdg", "/dev/xvdh", "/dev/xvdi", "/dev/xvdj", "/dev/xvdk", "/dev/xvdl", "/dev/xvdm", "/dev/xvdn", "/dev/xvdo", "/dev/xvdp", "/dev/xvdq", "/dev/xvdr", "/dev/xvds", "/dev/xvdt", "/dev/xvdu", "/dev/xvdv", "/dev/xvdw", "/dev/xvdx", "/dev/xvdy", "/dev/xvdz"]
+}
+
+variable "ebs_backup_volume_size" {
+  type        = number
+  description = "The size of the drive in GiBs"
+  default     = 60
+}
+
+variable "ebs_temp_volume_size" {
+  type        = number
+  description = "The size of the drive in GiBs"
+  default     = 60
+}
 ###【TAGS】###
 
 variable "name" {
@@ -129,6 +216,7 @@ variable "managedby" {
 
 }
 
+# OPTIONAL TAGS
 variable "tags" {
   type        = map(string)
   description = "Additional tags for resources"

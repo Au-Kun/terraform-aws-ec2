@@ -7,7 +7,7 @@ terraform {
 
   backend "s3" {
     bucket = "mso-prod-tf-state"
-    key    = "ec2/mso-prod-ec2.tfstate"
+    key    = "ec2/AMOMNISRC.tfstate"
     region = "us-west-2"
   }
 }
