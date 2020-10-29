@@ -1,7 +1,7 @@
 <powershell>
 
 $DN = "alturamso.com"
-$ServerName = "AMOMNISRC"
+$ServerName = "AMOMNITRGT"
 
 Install-WindowsFeature RSAT-AD-PowerShell
 
