@@ -28,10 +28,10 @@ data "aws_ami" "windows" {
   }
 }
 
-data "aws_vpc" "default" {
-  default = false
-  id      = var.aws_vpc
-}
+# data "aws_vpc" "default" {
+#   default = false
+#   id      = var.aws_vpc
+# }
 
 # data "aws_subnet_id" "default" {
 #   vpc_id = data.aws_vpc.default.id
@@ -42,3 +42,6 @@ data "aws_vpc" "default" {
 #   }
 # }
 
+# data "template_file" "user_data" {
+#   template = file("${path.module}/scripts/windows.ps1")
+# }

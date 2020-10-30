@@ -4,7 +4,6 @@ variable "region" {
 }
 
 variable "owners" {
-  #type        = list(string)
   description = "The AMI owners (e.g AWS account ID, self (the current account), or an AWS owner alias (e.g. amazon, aws-marketplace, microsoft)"
   default     = ["self", "amazon"]
 }
@@ -36,7 +35,7 @@ variable "linux_enabled" {
 variable "instance_type" {
   type        = string
   description = "List of nested arguments provides the ability to specify multiple instance types"
-  default     = "t2.micro"
+  default     = ""
 }
 
 variable "key_name" {
@@ -54,7 +53,7 @@ variable "detailed_monitoring" {
 variable "disable_instance_termination" {
   type        = bool
   description = "If true, enables EC2 Instance Termination Protection"
-  default     = "false"
+  default     = false
 
 }
 
@@ -63,11 +62,11 @@ variable "disable_instance_termination" {
 //  description = "The ID of the VPC that the instance security group belongs to"
 //}
 
-variable "aws_vpc" {
-  type        = string
-  description = "A list of vpc"
-  default     = ""
-}
+# variable "aws_vpc" {
+#   type        = string
+#   description = "A list of vpc"
+#   default     = ""
+# }
 
 variable "subnet_id" {
   type        = string
@@ -169,7 +168,7 @@ variable "ebs_backup_volume_size" {
 variable "ebs_temp_volume_size" {
   type        = number
   description = "The size of the drive in GiBs"
-  default     = 60
+  default     = "60"
 }
 ###【TAGS】###
 
