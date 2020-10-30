@@ -86,10 +86,10 @@ variable "windows_image_id" {
    default     = []
  }
 
- variable "user_data" {
-   description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead."
-   default     = ""
- }
+#  variable "user_data" {
+#    description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead."
+#    default     = ""
+#  }
 
  variable "availability_zone" {
    type        = string

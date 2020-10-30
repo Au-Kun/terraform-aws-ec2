@@ -10,7 +10,6 @@ module "amomnisrc_test" {
   detailed_monitoring          = var.detailed_monitoring
   disable_instance_termination = var.disable_instance_termination
   security_groups              = var.security_groups
-  user_data                    = var.user_data
   root_volume_type             = var.root_volume_type
   root_volume_size             = var.root_volume_size
   delete_on_termination        = var.delete_on_termination
