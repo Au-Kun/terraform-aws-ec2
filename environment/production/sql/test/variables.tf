@@ -50,35 +50,35 @@ variable "windows_image_id" {
    default     = false
  }
 
- variable "disable_instance_termination" {
+ variable "instance_termination_protection" {
    type        = bool
    description = "If true, enables EC2 Instance Termination Protection"
    default     = false
 
  }
 
- //variable "vpc_id" {
- //  type        = string
- //  description = "The ID of the VPC that the instance security group belongs to"
- //}
-
-#  variable "aws_vpc" {
+#  variable "vpc_id" {
 #    type        = string
-#    description = "A list of vpc"
-#    default     = ""
+#    description = "The ID of the VPC that the instance security group belongs to"
 #  }
+
+ variable "aws_vpc" {
+   type        = string
+   description = "A list of vpc"
+   default     = ""
+ }
+
+ variable "subnet_id" {
+   type        = string
+   description = "subnet ID to launch the resources in"
+   default     = ""
+ }
 
 #  variable "subnet_id" {
-#    type        = string
-#    description = "subnet ID to launch the resources in"
-#    default     = ""
+#    type        = list(string)
+#    description = "A list of subnet IDs to launch the resources in"
+#    default     = [""]
 #  }
-
- # variable "subnet_id" {
- #   type        = list(string)
- #   description = "A list of subnet IDs to launch the resources in"
- #   default     = [""]
- # }
 
  variable "security_groups" {
    description = "List of Security Group IDs allowed to connect to the instance"
@@ -111,7 +111,7 @@ variable "root_volume_size" {
   default     = 80
 }
 
- variable "delete_on_termination" {
+ variable "ebs_delete_on_termination" {
    type        = bool
    description = "Whether the volume should be destroyed on instance termination (Default: false)"
    default     = false

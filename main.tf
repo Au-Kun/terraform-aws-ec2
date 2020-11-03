@@ -19,7 +19,7 @@ resource "aws_instance" "windows" {
   instance_type           = var.instance_type
   key_name                = var.key_name
   monitoring              = var.detailed_monitoring
-  disable_api_termination = var.disable_instance_termination
+  disable_api_termination = var.instance_termination_protection
   vpc_security_group_ids  = var.security_groups
   subnet_id               = var.subnet_id
   user_data               = filebase64("${path.module}/scripts/windows.ps1")
@@ -30,7 +30,7 @@ resource "aws_instance" "windows" {
   root_block_device {
     volume_type           = var.root_volume_type
     volume_size           = var.root_volume_size
-    delete_on_termination = var.delete_on_termination
+    delete_on_termination = var.ebs_delete_on_termination
     encrypted             = var.ebs_encrypted
     kms_key_id            = var.kms_key_id
 
@@ -41,7 +41,7 @@ resource "aws_instance" "windows" {
   }
 
   tags = {
-    "Name"        = local.prefix_name
+    "Name"        = var.name #local.prefix_name
     "tenant"      = local.common_tags.tenant
     "tenanttype"  = local.common_tags.tenanttype
     "environment" = local.common_tags.environment
