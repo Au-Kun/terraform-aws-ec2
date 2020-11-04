@@ -12,6 +12,9 @@ locals {
   }
 }
 
+
+###【WINDOWS】###
+
 resource "aws_instance" "windows" {
   count = var.windows_enabled ? 1 : 0
 
@@ -116,23 +119,107 @@ resource "aws_volume_attachment" "temp_default" {
 }
 
 
+###【LINUX】###
+
+resource "aws_instance" "linux" {
+  count = var.linux_enabled ? 1 : 0
+
+  ami                     = data.aws_ami.linux.id
+  instance_type           = var.instance_type
+  key_name                = var.key_name
+  monitoring              = var.detailed_monitoring
+  disable_api_termination = var.instance_termination_protection
+  vpc_security_group_ids  = var.security_groups
+  subnet_id               = var.subnet_id
+  user_data               = filebase64("${path.module}/scripts/linux.sh")
+  iam_instance_profile    = aws_iam_instance_profile.ec2_profile.name
+  availability_zone       = var.availability_zone
 
 
-# resource "aws_instance" "linux" {
-#   count = var.linux_enabled ? 1 : 0
+  root_block_device {
+    volume_type           = var.root_volume_type
+    volume_size           = var.root_volume_size
+    delete_on_termination = var.ebs_delete_on_termination
+    encrypted             = var.ebs_encrypted
+    kms_key_id            = var.kms_key_id
 
-#   ami           = data.aws_ami.linux.id
-#   instance_type = var.instance_type
-#   key_name      = var.key_name
-#   monitoring    = var.monitoring
-#   subnet_id     = "subnet-0e00e8fa7e8456b71"
+  }
 
+  volume_tags = {
+    "Name" = local.prefix_name
+  }
 
-#   tags = {
-#     "Name"        = local.prefix_name
-#     "tenant"      = local.common_tags.tenant
-#     "tenanttype"  = local.common_tags.tenanttype
-#     "environment" = local.common_tags.environment
+  tags = {
+    "Name"        = var.name #local.prefix_name
+    "tenant"      = local.common_tags.tenant
+    "tenanttype"  = local.common_tags.tenanttype
+    "environment" = local.common_tags.environment
 
-#   }
-# }
+  }
+}
+
+resource "aws_ebs_volume" "linux_log_default" {
+  count             = var.log_volume_count
+  availability_zone = var.availability_zone
+  encrypted         = var.ebs_encrypted
+  kms_key_id        = var.kms_key_id
+  size              = var.log_volume_size
+  #iops              = var.ebs_iops
+  type = var.ebs_volume_type
+
+  tags = {
+    "Name" = local.prefix_name
+  }
+
+}
+
+resource "aws_volume_attachment" "linux_log_default" {
+  count       = var.log_volume_count
+  device_name = "/dev/xvdb"
+  volume_id   = aws_ebs_volume.linux_log_default.*.id[count.index]
+  instance_id = join("", aws_instance.linux.*.id)
+}
+
+resource "aws_ebs_volume" "linux_backup_default" {
+  count             = var.backup_volume_count
+  availability_zone = var.availability_zone
+  encrypted         = var.ebs_encrypted
+  kms_key_id        = var.kms_key_id
+  size              = var.backup_volume_size
+  #iops              = var.ebs_iops
+  type = var.ebs_volume_type
+
+  tags = {
+    "Name" = local.prefix_name
+  }
+
+}
+
+resource "aws_volume_attachment" "linux_backup_default" {
+  count       = var.backup_volume_count
+  device_name = "/dev/xvdc"
+  volume_id   = aws_ebs_volume.linux_backup_default.*.id[count.index]
+  instance_id = join("", aws_instance.linux.*.id)
+}
+
+resource "aws_ebs_volume" "linux_temp_default" {
+  count             = var.temp_volume_count
+  availability_zone = var.availability_zone
+  encrypted         = var.ebs_encrypted
+  kms_key_id        = var.kms_key_id
+  size              = var.temp_volume_size
+  #iops              = var.ebs_iops
+  type = var.ebs_volume_type
+
+  tags = {
+    "Name" = local.prefix_name
+  }
+
+}
+
+resource "aws_volume_attachment" "linux_temp_default" {
+  count       = var.temp_volume_count
+  device_name = "/dev/xvdd"
+  volume_id   = aws_ebs_volume.linux_temp_default.*.id[count.index]
+  instance_id = join("", aws_instance.linux.*.id)
+}
