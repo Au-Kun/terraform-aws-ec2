@@ -20,8 +20,8 @@ module "DEVCITRA2" {
   log_volume_count                = var.log_volume_count
   backup_volume_count             = var.backup_volume_count
   temp_volume_count               = var.temp_volume_count
-  log_volume_size                 = var.log_volume_size
   ebs_volume_type                 = var.ebs_volume_type
+  log_volume_size                 = var.log_volume_size
   backup_volume_size              = var.backup_volume_size
   temp_volume_size                = var.temp_volume_size
   name                            = var.name
