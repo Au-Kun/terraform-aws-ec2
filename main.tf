@@ -50,11 +50,11 @@ resource "aws_instance" "windows" {
 }
 
 resource "aws_ebs_volume" "log_default" {
-  count             = var.ebs_volume_count
+  count             = var.log_volume_count
   availability_zone = var.availability_zone
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
-  size              = var.ebs_log_volume_size
+  size              = var.log_volume_size
   #iops              = var.ebs_iops
   type = var.ebs_volume_type
 
@@ -65,18 +65,18 @@ resource "aws_ebs_volume" "log_default" {
 }
 
 resource "aws_volume_attachment" "log_default" {
-  count       = var.ebs_volume_count
+  count       = var.log_volume_count
   device_name = "/dev/xvdb"
   volume_id   = aws_ebs_volume.log_default.*.id[count.index]
   instance_id = join("", aws_instance.windows.*.id)
 }
 
 resource "aws_ebs_volume" "backup_default" {
-  count             = var.ebs_volume_count
+  count             = var.backup_volume_count
   availability_zone = var.availability_zone
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
-  size              = var.ebs_backup_volume_size
+  size              = var.backup_volume_size
   #iops              = var.ebs_iops
   type = var.ebs_volume_type
 
@@ -87,18 +87,18 @@ resource "aws_ebs_volume" "backup_default" {
 }
 
 resource "aws_volume_attachment" "backup_default" {
-  count       = var.ebs_volume_count
+  count       = var.backup_volume_count
   device_name = "/dev/xvdc"
   volume_id   = aws_ebs_volume.backup_default.*.id[count.index]
   instance_id = join("", aws_instance.windows.*.id)
 }
 
 resource "aws_ebs_volume" "temp_default" {
-  count             = var.ebs_volume_count
+  count             = var.temp_volume_count
   availability_zone = var.availability_zone
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
-  size              = var.ebs_temp_volume_size
+  size              = var.temp_volume_size
   #iops              = var.ebs_iops
   type = var.ebs_volume_type
 
@@ -109,7 +109,7 @@ resource "aws_ebs_volume" "temp_default" {
 }
 
 resource "aws_volume_attachment" "temp_default" {
-  count       = var.ebs_volume_count
+  count       = var.temp_volume_count
   device_name = "/dev/xvdd"
   volume_id   = aws_ebs_volume.temp_default.*.id[count.index]
   instance_id = join("", aws_instance.windows.*.id)

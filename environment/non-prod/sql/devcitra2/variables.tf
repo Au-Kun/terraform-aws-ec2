@@ -129,13 +129,25 @@ variable "root_volume_size" {
    default     = ""
  }
 
- variable "ebs_volume_count" {
+ variable "log_volume_count" {
    type        = number
    description = "The number of ebs volume to create"
    default     = 0
  }
 
- variable "ebs_log_volume_size" {
+  variable "backup_volume_count" {
+   type        = number
+   description = "The number of ebs volume to create"
+   default     = 0
+ }
+
+  variable "temp_volume_count" {
+   type        = number
+   description = "The number of ebs volume to create"
+   default     = 0
+ }
+
+ variable "log_volume_size" {
    type        = number
    description = "The size of the drive in GiBs"
    default     = 60
@@ -159,13 +171,13 @@ variable "root_volume_size" {
    default     = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd", "/dev/xvde", "/dev/xvdf", "/dev/xvdg", "/dev/xvdh", "/dev/xvdi", "/dev/xvdj", "/dev/xvdk", "/dev/xvdl", "/dev/xvdm", "/dev/xvdn", "/dev/xvdo", "/dev/xvdp", "/dev/xvdq", "/dev/xvdr", "/dev/xvds", "/dev/xvdt", "/dev/xvdu", "/dev/xvdv", "/dev/xvdw", "/dev/xvdx", "/dev/xvdy", "/dev/xvdz"]
  }
 
- variable "ebs_backup_volume_size" {
+ variable "backup_volume_size" {
    type        = number
    description = "The size of the drive in GiBs"
    default     = 60
  }
 
- variable "ebs_temp_volume_size" {
+ variable "temp_volume_size" {
    type        = number
    description = "The size of the drive in GiBs"
    default     = 60
