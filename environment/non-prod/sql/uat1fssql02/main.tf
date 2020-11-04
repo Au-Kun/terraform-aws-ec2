@@ -1,4 +1,4 @@
-module "" {
+module "UAT1FSSQL02" {
   source                          = "../../../../../terraform-aws-ec2"
   region                          = var.region
   linux_image_id                  = var.linux_image_id

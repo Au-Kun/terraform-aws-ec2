@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket  = "mso-nonprod-tf-state"
-    key     = "ec2/<module_name>.tfstate"
+    key     = "ec2/devcitra1.tfstate"
     region  = "us-west-2"
     profile = "non-prod"
   }
