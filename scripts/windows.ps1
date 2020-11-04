@@ -6,6 +6,10 @@ $tag_name = aws ec2 describe-instances --instance-ids $instance_id --query 'Rese
 $DN = "alturamso.com"
 $ServerName = "$tag_name"
 
+# Retreives from Parameter Store
+$domainuser = (Get-SSMParameter -Name msoAWSDomainUser -WithDecryption $true).Value
+$domainpw = (Get-SSMParameter -Name msoAWSDomainPW -WithDecryption $true).Value
+
 #Set Timezone to PST
 Set-TimeZone -Id "Pacific Standard Time"
 
@@ -13,6 +17,6 @@ Set-TimeZone -Id "Pacific Standard Time"
 Install-WindowsFeature RSAT-AD-PowerShell
 
 #Join computer to domain
-Add-Computer -DomainName $DN -NewName $ServerName -Credential (New-Object -TypeName PSCredential -ArgumentList "<domainusername>", (ConvertTo-SecureString -String '<password>' -AsPlainText -Force)[0]) -Restart
+Add-Computer -DomainName $DN.ToUpper() -NewName $ServerName.ToUpper() -Credential (New-Object -TypeName PSCredential -ArgumentList "$domainuser", (ConvertTo-SecureString -String "$domainpw" -AsPlainText -Force)[0]) -Restart
 
 </powershell>

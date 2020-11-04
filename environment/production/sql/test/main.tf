@@ -1,4 +1,4 @@
-module "amomnisrc_test" {
+module "test" {
   source                          = "../../../../../terraform-aws-ec2"
   region                          = var.region
   linux_image_id                  = var.linux_image_id
