@@ -28,6 +28,7 @@ resource "aws_instance" "windows" {
   user_data               = filebase64("${path.module}/scripts/windows.ps1")
   iam_instance_profile    = aws_iam_instance_profile.ec2_profile.name
   availability_zone       = var.availability_zone
+  get_password_data       = true
 
 
   root_block_device {
@@ -131,7 +132,7 @@ resource "aws_instance" "linux" {
   disable_api_termination = var.instance_termination_protection
   vpc_security_group_ids  = var.security_groups
   subnet_id               = var.subnet_id
-  user_data               = filebase64("${path.module}/scripts/linux.sh")
+  user_data               = filebase64("${path.cwd}/scripts/${var.linux_user_data}.sh")
   iam_instance_profile    = aws_iam_instance_profile.ec2_profile.name
   availability_zone       = var.availability_zone
 

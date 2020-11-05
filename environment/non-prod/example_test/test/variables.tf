@@ -97,6 +97,11 @@ variable "windows_image_id" {
    default     = "us-west-2b"
  }
 
+variable "linux_user_data" {
+  description = "User data script"
+  default     = ""
+}
+
  ###【VOLUMES】###
 
  variable "root_volume_type" {
