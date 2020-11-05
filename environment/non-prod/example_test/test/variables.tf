@@ -99,7 +99,6 @@ variable "windows_image_id" {
 
 variable "linux_user_data" {
   description = "User data script"
-  default     = ""
 }
 
  ###【VOLUMES】###
