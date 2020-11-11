@@ -25,7 +25,7 @@ resource "aws_instance" "windows" {
   disable_api_termination = var.instance_termination_protection
   vpc_security_group_ids  = var.security_groups
   subnet_id               = var.subnet_id
-  user_data               = filebase64("${path.module}/scripts/windows.ps1")
+  user_data               = filebase64("${path.cwd}/scripts/${var.windows_user_data}.ps1")
   iam_instance_profile    = aws_iam_instance_profile.ec2_profile.name
   availability_zone       = var.availability_zone
   get_password_data       = true
@@ -41,7 +41,8 @@ resource "aws_instance" "windows" {
   }
 
   volume_tags = {
-    "Name" = local.prefix_name
+    "Name"      = local.prefix_name
+    "managedby" = local.common_tags_managedby
   }
 
   tags = {
@@ -49,6 +50,7 @@ resource "aws_instance" "windows" {
     "tenant"      = local.common_tags.tenant
     "tenanttype"  = local.common_tags.tenanttype
     "environment" = local.common_tags.environment
+    "managedby"   = local.common_tags_managedby
 
   }
 }
@@ -59,11 +61,13 @@ resource "aws_ebs_volume" "log_default" {
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.log_volume_size
+  type              = var.ebs_volume_type
   #iops              = var.ebs_iops
-  type = var.ebs_volume_type
+
 
   tags = {
-    "Name" = local.prefix_name
+    "Name"      = local.prefix_name
+    "managedby" = local.common_tags_managedby
   }
 
 }
@@ -81,11 +85,12 @@ resource "aws_ebs_volume" "backup_default" {
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.backup_volume_size
+  type              = var.ebs_volume_type
   #iops              = var.ebs_iops
-  type = var.ebs_volume_type
 
   tags = {
-    "Name" = local.prefix_name
+    "Name"      = local.prefix_name
+    "managedby" = local.common_tags_managedby
   }
 
 }
@@ -103,11 +108,12 @@ resource "aws_ebs_volume" "temp_default" {
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.temp_volume_size
+  type              = var.ebs_volume_type
   #iops              = var.ebs_iops
-  type = var.ebs_volume_type
 
   tags = {
-    "Name" = local.prefix_name
+    "Name"      = local.prefix_name
+    "managedby" = local.common_tags_managedby
   }
 
 }
@@ -147,7 +153,8 @@ resource "aws_instance" "linux" {
   }
 
   volume_tags = {
-    "Name" = local.prefix_name
+    "Name"      = local.prefix_name
+    "managedby" = local.common_tags_managedby
   }
 
   tags = {
@@ -155,6 +162,7 @@ resource "aws_instance" "linux" {
     "tenant"      = local.common_tags.tenant
     "tenanttype"  = local.common_tags.tenanttype
     "environment" = local.common_tags.environment
+    "managedby"   = local.common_tags_managedby
 
   }
 }
@@ -165,11 +173,12 @@ resource "aws_ebs_volume" "linux_log_default" {
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.log_volume_size
+  type              = var.ebs_volume_type
   #iops              = var.ebs_iops
-  type = var.ebs_volume_type
 
   tags = {
-    "Name" = local.prefix_name
+    "Name"      = local.prefix_name
+    "managedby" = local.common_tags_managedby
   }
 
 }
@@ -187,11 +196,12 @@ resource "aws_ebs_volume" "linux_backup_default" {
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.backup_volume_size
+  type              = var.ebs_volume_type
   #iops              = var.ebs_iops
-  type = var.ebs_volume_type
 
   tags = {
-    "Name" = local.prefix_name
+    "Name"      = local.prefix_name
+    "managedby" = local.common_tags_managedby
   }
 
 }
@@ -209,11 +219,12 @@ resource "aws_ebs_volume" "linux_temp_default" {
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.temp_volume_size
+  type              = var.ebs_volume_type
   #iops              = var.ebs_iops
-  type = var.ebs_volume_type
 
   tags = {
-    "Name" = local.prefix_name
+    "Name"      = local.prefix_name
+    "managedby" = local.common_tags_managedby
   }
 
 }

@@ -97,6 +97,10 @@ variable "availability_zone" {
   default     = "us-west-2b"
 }
 
+variable "windows_user_data" {
+  description = "User data script"
+}
+
 variable "linux_user_data" {
   description = "User data script"
 }
