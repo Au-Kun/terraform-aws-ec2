@@ -190,12 +190,13 @@ variable "temp_volume_size" {
   description = "The size of the drive in GiBs"
   default     = 60
 }
+
 ###【TAGS】###
 
 variable "name" {
   type        = string
   description = "Tenants represent a logical grouping of client(s) or services, either by region, specific needs, or other criteria"
-  default     = "mso"
+  default     = ""
 }
 
 variable "tenant" {
@@ -213,7 +214,7 @@ variable "tenant_type" {
 variable "environment" {
   type        = string
   description = "The type of environment (e.g dev1, qa2, stage1, prod)"
-  default     = "production"
+  default     = ""
 }
 
 variable "delimiter" {
