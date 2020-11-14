@@ -57,11 +57,6 @@ variable "instance_termination_protection" {
 
 }
 
-#  variable "vpc_id" {
-#    type        = string
-#    description = "The ID of the VPC that the instance security group belongs to"
-#  }
-
 variable "aws_vpc" {
   type        = string
   description = "A list of vpc"
@@ -74,22 +69,11 @@ variable "subnet_id" {
   default     = ""
 }
 
-#  variable "subnet_id" {
-#    type        = list(string)
-#    description = "A list of subnet IDs to launch the resources in"
-#    default     = [""]
-#  }
-
 variable "security_groups" {
   description = "List of Security Group IDs allowed to connect to the instance"
   type        = list(string)
   default     = []
 }
-
-#  variable "user_data" {
-#    description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead."
-#    default     = ""
-#  }
 
 variable "availability_zone" {
   type        = string
@@ -190,30 +174,31 @@ variable "temp_volume_size" {
   description = "The size of the drive in GiBs"
   default     = 60
 }
+
 ###【TAGS】###
 
 variable "name" {
   type        = string
-  description = "Tenants represent a logical grouping of client(s) or services, either by region, specific needs, or other criteria"
-  default     = "mso"
-}
-
-variable "tenant" {
-  type        = string
-  description = "Tenants represent a logical grouping of client(s) or services, either by region, specific needs, or other criteria"
-  default     = "us-west-2"
-}
-
-variable "tenant_type" {
-  type        = string
-  description = "Tenant types represent larger verticals/categories that exist within the business and our ecosystem (e.g Ticketing, Tools)"
+  description = "The name of the resource"
   default     = ""
 }
 
-variable "environment" {
+variable "application_name" {
   type        = string
-  description = "The type of environment (e.g dev1, qa2, stage1, prod)"
-  default     = "production"
+  description = "Application name represent the name of your application (e.g grafana)"
+  default     = ""
+}
+
+variable "application_type" {
+  type        = string
+  description = "Application type represent the type of application (e.g monitoring, db)"
+  default     = ""
+}
+
+variable "stack" {
+  type        = string
+  description = "Stack represent the type of environment (e.g dev, qa, stage, prod)"
+  default     = ""
 }
 
 variable "delimiter" {

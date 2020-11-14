@@ -27,8 +27,8 @@ module "example_test01" {
   backup_volume_size              = var.backup_volume_size
   temp_volume_size                = var.temp_volume_size
   name                            = var.name
-  tenant                          = var.tenant
-  tenant_type                     = var.tenant_type
-  environment                     = var.environment
+  application_name                = var.application_name
+  application_type                = var.application_type
+  stack                           = var.stack
   managedby                       = var.managedby
 }

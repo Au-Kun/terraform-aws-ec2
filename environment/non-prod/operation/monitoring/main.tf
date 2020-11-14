@@ -1,5 +1,7 @@
-module "DEVCITRA2" {
+module "grafana" {
   source                          = "../../../../../terraform-aws-ec2"
+  linux_user_data                 = var.linux_user_data
+  windows_user_data               = var.windows_user_data
   region                          = var.region
   linux_image_id                  = var.linux_image_id
   windows_image_id                = var.windows_image_id
@@ -29,5 +31,4 @@ module "DEVCITRA2" {
   application_type                = var.application_type
   stack                           = var.stack
   managedby                       = var.managedby
-
 }

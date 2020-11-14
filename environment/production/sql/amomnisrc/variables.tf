@@ -4,7 +4,6 @@ variable "region" {
 }
 
 variable "owners" {
-  #type        = list(string)
   description = "The AMI owners (e.g AWS account ID, self (the current account), or an AWS owner alias (e.g. amazon, aws-marketplace, microsoft)"
   default     = ["self", "amazon"]
 }
@@ -36,7 +35,7 @@ variable "linux_enabled" {
 variable "instance_type" {
   type        = string
   description = "List of nested arguments provides the ability to specify multiple instance types"
-  default     = "t2.micro"
+  default     = ""
 }
 
 variable "key_name" {
@@ -51,17 +50,12 @@ variable "detailed_monitoring" {
   default     = false
 }
 
-variable "disable_instance_termination" {
+variable "instance_termination_protection" {
   type        = bool
   description = "If true, enables EC2 Instance Termination Protection"
-  default     = "false"
+  default     = false
 
 }
-
-//variable "vpc_id" {
-//  type        = string
-//  description = "The ID of the VPC that the instance security group belongs to"
-//}
 
 variable "aws_vpc" {
   type        = string
@@ -75,27 +69,24 @@ variable "subnet_id" {
   default     = ""
 }
 
-# variable "subnet_id" {
-#   type        = list(string)
-#   description = "A list of subnet IDs to launch the resources in"
-#   default     = [""]
-# }
-
 variable "security_groups" {
   description = "List of Security Group IDs allowed to connect to the instance"
   type        = list(string)
   default     = []
 }
 
-variable "user_data" {
-  description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead."
-  default     = ""
-}
-
 variable "availability_zone" {
   type        = string
   description = "The AZ where the resource will exist"
   default     = "us-west-2b"
+}
+
+variable "windows_user_data" {
+  description = "User data script"
+}
+
+variable "linux_user_data" {
+  description = "User data script"
 }
 
 ###【VOLUMES】###
@@ -109,10 +100,10 @@ variable "root_volume_type" {
 variable "root_volume_size" {
   type        = number
   description = "The size of the volume in gibibytes"
-  default     = 60
+  default     = 80
 }
 
-variable "delete_on_termination" {
+variable "ebs_delete_on_termination" {
   type        = bool
   description = "Whether the volume should be destroyed on instance termination (Default: false)"
   default     = false
@@ -130,13 +121,25 @@ variable "kms_key_id" {
   default     = ""
 }
 
-variable "ebs_volume_count" {
+variable "log_volume_count" {
   type        = number
   description = "The number of ebs volume to create"
   default     = 0
 }
 
-variable "ebs_log_volume_size" {
+variable "backup_volume_count" {
+  type        = number
+  description = "The number of ebs volume to create"
+  default     = 0
+}
+
+variable "temp_volume_count" {
+  type        = number
+  description = "The number of ebs volume to create"
+  default     = 0
+}
+
+variable "log_volume_size" {
   type        = number
   description = "The size of the drive in GiBs"
   default     = 60
@@ -160,41 +163,42 @@ variable "ebs_device_name" {
   default     = ["/dev/xvdb", "/dev/xvdc", "/dev/xvdd", "/dev/xvde", "/dev/xvdf", "/dev/xvdg", "/dev/xvdh", "/dev/xvdi", "/dev/xvdj", "/dev/xvdk", "/dev/xvdl", "/dev/xvdm", "/dev/xvdn", "/dev/xvdo", "/dev/xvdp", "/dev/xvdq", "/dev/xvdr", "/dev/xvds", "/dev/xvdt", "/dev/xvdu", "/dev/xvdv", "/dev/xvdw", "/dev/xvdx", "/dev/xvdy", "/dev/xvdz"]
 }
 
-variable "ebs_backup_volume_size" {
+variable "backup_volume_size" {
   type        = number
   description = "The size of the drive in GiBs"
   default     = 60
 }
 
-variable "ebs_temp_volume_size" {
+variable "temp_volume_size" {
   type        = number
   description = "The size of the drive in GiBs"
   default     = 60
 }
+
 ###【TAGS】###
 
 variable "name" {
   type        = string
-  description = "Tenants represent a logical grouping of client(s) or services, either by region, specific needs, or other criteria"
-  default     = "mso"
-}
-
-variable "tenant" {
-  type        = string
-  description = "Tenants represent a logical grouping of client(s) or services, either by region, specific needs, or other criteria"
-  default     = "us-west-2"
-}
-
-variable "tenant_type" {
-  type        = string
-  description = "Tenant types represent larger verticals/categories that exist within the business and our ecosystem (e.g Ticketing, Tools)"
+  description = "The name of the resource"
   default     = ""
 }
 
-variable "environment" {
+variable "application_name" {
   type        = string
-  description = "The type of environment (e.g dev1, qa2, stage1, prod)"
-  default     = "production"
+  description = "Application name represent the name of your application (e.g grafana)"
+  default     = ""
+}
+
+variable "application_type" {
+  type        = string
+  description = "Application type represent the type of application (e.g monitoring, db)"
+  default     = ""
+}
+
+variable "stack" {
+  type        = string
+  description = "Stack represent the type of environment (e.g dev, qa, stage, prod)"
+  default     = ""
 }
 
 variable "delimiter" {
