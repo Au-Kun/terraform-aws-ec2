@@ -33,8 +33,9 @@ resource "aws_instance" "windows" {
 
   root_block_device {
     volume_type           = var.root_volume_type
+    iops                  = var.root_iops
     volume_size           = var.root_volume_size
-    delete_on_termination = var.ebs_delete_on_termination
+    delete_on_termination = var.root_ebs_delete_on_termination
     encrypted             = var.ebs_encrypted
     kms_key_id            = var.kms_key_id
 
@@ -62,8 +63,8 @@ resource "aws_ebs_volume" "log_default" {
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.log_volume_size
-  type              = var.ebs_volume_type
-  #iops              = var.ebs_iops
+  type              = var.log_volume_type
+  iops              = var.log_iops
 
 
   tags = {
@@ -87,8 +88,8 @@ resource "aws_ebs_volume" "backup_default" {
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.backup_volume_size
-  type              = var.ebs_volume_type
-  #iops              = var.ebs_iops
+  type              = var.backup_volume_type
+  iops              = var.backup_iops
 
   tags = {
     "Name"      = local.prefix_name
@@ -111,8 +112,8 @@ resource "aws_ebs_volume" "temp_default" {
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.temp_volume_size
-  type              = var.ebs_volume_type
-  #iops              = var.ebs_iops
+  type              = var.temp_volume_type
+  iops              = var.temp_iops
 
   tags = {
     "Name"      = local.prefix_name
