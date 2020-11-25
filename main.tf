@@ -42,7 +42,7 @@ resource "aws_instance" "windows" {
   }
 
   volume_tags = {
-    "Name"      = local.prefix_name
+    "Name"      = "${local.prefix_name} : C"
     "stack"     = local.common_tags.stack
     "managedby" = local.common_tags.managedby
   }
@@ -58,7 +58,7 @@ resource "aws_instance" "windows" {
 }
 
 resource "aws_ebs_volume" "log_default" {
-  count             = var.log_volume_count
+  count             = var.windows_log_ebs_enabled ? 1 : 0
   availability_zone = var.availability_zone
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
@@ -68,7 +68,7 @@ resource "aws_ebs_volume" "log_default" {
 
 
   tags = {
-    "Name"      = local.prefix_name
+    "Name"      = "${local.prefix_name} : L"
     "stack"     = local.common_tags.stack
     "managedby" = local.common_tags.managedby
   }
@@ -76,14 +76,14 @@ resource "aws_ebs_volume" "log_default" {
 }
 
 resource "aws_volume_attachment" "log_default" {
-  count       = var.log_volume_count
+  count       = var.windows_log_ebs_enabled ? 1 : 0
   device_name = "/dev/xvdb"
   volume_id   = aws_ebs_volume.log_default.*.id[count.index]
   instance_id = join("", aws_instance.windows.*.id)
 }
 
 resource "aws_ebs_volume" "backup_default" {
-  count             = var.backup_volume_count
+  count             = var.windows_backup_ebs_enabled ? 1 : 0
   availability_zone = var.availability_zone
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
@@ -92,7 +92,7 @@ resource "aws_ebs_volume" "backup_default" {
   iops              = var.backup_iops
 
   tags = {
-    "Name"      = local.prefix_name
+    "Name"      = "${local.prefix_name} : D"
     "stack"     = local.common_tags.stack
     "managedby" = local.common_tags.managedby
   }
@@ -100,14 +100,14 @@ resource "aws_ebs_volume" "backup_default" {
 }
 
 resource "aws_volume_attachment" "backup_default" {
-  count       = var.backup_volume_count
+  count       = var.windows_backup_ebs_enabled ? 1 : 0
   device_name = "/dev/xvdc"
   volume_id   = aws_ebs_volume.backup_default.*.id[count.index]
   instance_id = join("", aws_instance.windows.*.id)
 }
 
 resource "aws_ebs_volume" "temp_default" {
-  count             = var.temp_volume_count
+  count             = var.windows_temp_ebs_enabled ? 1 : 0
   availability_zone = var.availability_zone
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
@@ -116,7 +116,7 @@ resource "aws_ebs_volume" "temp_default" {
   iops              = var.temp_iops
 
   tags = {
-    "Name"      = local.prefix_name
+    "Name"      = "${local.prefix_name} : T"
     "stack"     = local.common_tags.stack
     "managedby" = local.common_tags.managedby
   }
@@ -124,14 +124,14 @@ resource "aws_ebs_volume" "temp_default" {
 }
 
 resource "aws_volume_attachment" "temp_default" {
-  count       = var.temp_volume_count
+  count       = var.windows_temp_ebs_enabled ? 1 : 0
   device_name = "/dev/xvdd"
   volume_id   = aws_ebs_volume.temp_default.*.id[count.index]
   instance_id = join("", aws_instance.windows.*.id)
 }
 
 
-###【LINUX】###
+# ###【LINUX】###
 
 resource "aws_instance" "linux" {
   count = var.linux_enabled ? 1 : 0
@@ -150,8 +150,9 @@ resource "aws_instance" "linux" {
 
   root_block_device {
     volume_type           = var.root_volume_type
+    iops                  = var.root_iops
     volume_size           = var.root_volume_size
-    delete_on_termination = var.ebs_delete_on_termination
+    delete_on_termination = var.root_ebs_delete_on_termination
     encrypted             = var.ebs_encrypted
     kms_key_id            = var.kms_key_id
 
@@ -174,13 +175,13 @@ resource "aws_instance" "linux" {
 }
 
 resource "aws_ebs_volume" "linux_log_default" {
-  count             = var.log_volume_count
+  count             = var.linux_log_ebs_enabled ? 1 : 0
   availability_zone = var.availability_zone
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.log_volume_size
-  type              = var.ebs_volume_type
-  #iops              = var.ebs_iops
+  type              = var.log_volume_type
+  iops              = var.log_iops
 
   tags = {
     "Name"      = local.prefix_name
@@ -191,20 +192,20 @@ resource "aws_ebs_volume" "linux_log_default" {
 }
 
 resource "aws_volume_attachment" "linux_log_default" {
-  count       = var.log_volume_count
+  count       = var.linux_log_ebs_enabled ? 1 : 0
   device_name = "/dev/xvdb"
   volume_id   = aws_ebs_volume.linux_log_default.*.id[count.index]
   instance_id = join("", aws_instance.linux.*.id)
 }
 
 resource "aws_ebs_volume" "linux_backup_default" {
-  count             = var.backup_volume_count
+  count             = var.linux_backup_ebs_enabled ? 1 : 0
   availability_zone = var.availability_zone
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.backup_volume_size
-  type              = var.ebs_volume_type
-  #iops              = var.ebs_iops
+  type              = var.backup_volume_type
+  iops              = var.backup_iops
 
   tags = {
     "Name"      = local.prefix_name
@@ -215,20 +216,20 @@ resource "aws_ebs_volume" "linux_backup_default" {
 }
 
 resource "aws_volume_attachment" "linux_backup_default" {
-  count       = var.backup_volume_count
+  count       = var.linux_backup_ebs_enabled ? 1 : 0
   device_name = "/dev/xvdc"
   volume_id   = aws_ebs_volume.linux_backup_default.*.id[count.index]
   instance_id = join("", aws_instance.linux.*.id)
 }
 
 resource "aws_ebs_volume" "linux_temp_default" {
-  count             = var.temp_volume_count
+  count             = var.linux_temp_ebs_enabled ? 1 : 0
   availability_zone = var.availability_zone
   encrypted         = var.ebs_encrypted
   kms_key_id        = var.kms_key_id
   size              = var.temp_volume_size
-  type              = var.ebs_volume_type
-  #iops              = var.ebs_iops
+  type              = var.temp_volume_type
+  iops              = var.temp_iops
 
   tags = {
     "Name"      = local.prefix_name
@@ -239,7 +240,7 @@ resource "aws_ebs_volume" "linux_temp_default" {
 }
 
 resource "aws_volume_attachment" "linux_temp_default" {
-  count       = var.temp_volume_count
+  count       = var.linux_temp_ebs_enabled ? 1 : 0
   device_name = "/dev/xvdd"
   volume_id   = aws_ebs_volume.linux_temp_default.*.id[count.index]
   instance_id = join("", aws_instance.linux.*.id)

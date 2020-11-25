@@ -26,9 +26,57 @@ variable "windows_enabled" {
   default     = false
 }
 
+variable "windows_log_ebs_enabled" {
+  type        = bool
+  description = "Whether to create the ebs resources. Set to `false` to prevent the module from creating any resources"
+  default     = false
+}
+
+variable "windows_backup_ebs_enabled" {
+  type        = bool
+  description = "Whether to create the ebs resources. Set to `false` to prevent the module from creating any resources"
+  default     = false
+}
+
+variable "backup_volume_type" {
+  type        = string
+  description = "The type of volume. 'gp2', 'io1', 'io2', 'sc1', or 'st1'. (Default: 'gp2')."
+  default     = "gp2"
+}
+
+variable "backup_volume_size" {
+  type        = number
+  description = "The size of the drive in GiBs"
+  default     = 60
+}
+
+variable "windows_temp_ebs_enabled" {
+  type        = bool
+  description = "Whether to create the ebs resources. Set to `false` to prevent the module from creating any resources"
+  default     = false
+}
+
 variable "linux_enabled" {
   type        = bool
   description = "Whether to create the resources. Set to `false` to prevent the module from creating any resources"
+  default     = false
+}
+
+variable "linux_log_ebs_enabled" {
+  type        = bool
+  description = "Whether to create the ebs resources. Set to `false` to prevent the module from creating any resources"
+  default     = false
+}
+
+variable "linux_backup_ebs_enabled" {
+  type        = bool
+  description = "Whether to create the ebs resources. Set to `false` to prevent the module from creating any resources"
+  default     = false
+}
+
+variable "linux_temp_ebs_enabled" {
+  type        = bool
+  description = "Whether to create the ebs resources. Set to `false` to prevent the module from creating any resources"
   default     = false
 }
 
@@ -127,12 +175,6 @@ variable "kms_key_id" {
   default     = ""
 }
 
-variable "log_volume_count" {
-  type        = number
-  description = "The number of ebs volume to create"
-  default     = 0
-}
-
 variable "log_volume_size" {
   type        = number
   description = "The size of the drive in GiBs"
@@ -151,34 +193,10 @@ variable "log_iops" {
   default     = null
 }
 
-variable "backup_volume_count" {
-  type        = number
-  description = "The number of ebs volume to create"
-  default     = 0
-}
-
-variable "backup_volume_type" {
-  type        = string
-  description = "The type of volume. 'gp2', 'io1', 'io2', 'sc1', or 'st1'. (Default: 'gp2')."
-  default     = "gp2"
-}
-
-variable "backup_volume_size" {
-  type        = number
-  description = "The size of the drive in GiBs"
-  default     = 60
-}
-
 variable "backup_iops" {
   type        = number
   description = "The amount of provisioned IOPS. This is only valid for volume_type of 'io1/io2'"
   default     = null
-}
-
-variable "temp_volume_count" {
-  type        = number
-  description = "The number of ebs volume to create"
-  default     = 0
 }
 
 variable "temp_volume_size" {
