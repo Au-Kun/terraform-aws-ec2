@@ -43,16 +43,16 @@ resource "aws_instance" "windows" {
 
   volume_tags = {
     "Name"      = "${local.prefix_name} : C"
-    "Stack"     = local.common_tags.stack
-    "Managedby" = local.common_tags.managedby
+    "Stack"     = local.common_tags.Stack
+    "Managedby" = local.common_tags.Managedby
   }
 
   tags = {
     "Name"             = var.name #local.prefix_name
-    "Application_Name" = local.common_tags.application_name
-    "Application_Type" = local.common_tags.application_type
-    "Stack"            = local.common_tags.stack
-    "Managedby"        = local.common_tags.managedby
+    "Application_Name" = local.common_tags.Application_Name
+    "Application_Type" = local.common_tags.Application_Type
+    "Stack"            = local.common_tags.Stack
+    "Managedby"        = local.common_tags.Managedby
 
   }
 }
@@ -69,8 +69,8 @@ resource "aws_ebs_volume" "log_default" {
 
   tags = {
     "Name"      = "${local.prefix_name} : L"
-    "Stack"     = local.common_tags.stack
-    "Managedby" = local.common_tags.managedby
+    "Stack"     = local.common_tags.Stack
+    "Managedby" = local.common_tags.Managedby
   }
 
 }
@@ -93,8 +93,8 @@ resource "aws_ebs_volume" "backup_default" {
 
   tags = {
     "Name"      = "${local.prefix_name} : D"
-    "Stack"     = local.common_tags.stack
-    "Managedby" = local.common_tags.managedby
+    "Stack"     = local.common_tags.Stack
+    "Managedby" = local.common_tags.Managedby
   }
 
 }
@@ -117,8 +117,8 @@ resource "aws_ebs_volume" "temp_default" {
 
   tags = {
     "Name"      = "${local.prefix_name} : T"
-    "Stack"     = local.common_tags.stack
-    "Managedby" = local.common_tags.managedby
+    "Stack"     = local.common_tags.Stack
+    "Managedby" = local.common_tags.Managedby
   }
 
 }
@@ -141,8 +141,8 @@ resource "aws_ebs_volume" "bin_default" {
 
   tags = {
     "Name"      = "${local.prefix_name} : B"
-    "Stack"     = local.common_tags.stack
-    "Managedby" = local.common_tags.managedby
+    "Stack"     = local.common_tags.Stack
+    "Managedby" = local.common_tags.Managedby
   }
 
 }
@@ -183,16 +183,16 @@ resource "aws_instance" "linux" {
 
   volume_tags = {
     "Name"      = local.prefix_name
-    "Stack"     = local.common_tags.stack
-    "Managedby" = local.common_tags.managedby
+    "Stack"     = local.common_tags.Stack
+    "Managedby" = local.common_tags.Managedby
   }
 
   tags = {
     "Name"             = var.name #local.prefix_name
-    "Application_Name" = local.common_tags.application_name
-    "Application_Type" = local.common_tags.application_type
-    "Stack"            = local.common_tags.stack
-    "Managedby"        = local.common_tags.managedby
+    "Application_Name" = local.common_tags.Application_Name
+    "Application_Type" = local.common_tags.Application_Type
+    "Stack"            = local.common_tags.Stack
+    "Managedby"        = local.common_tags.Managedby
 
   }
 }
@@ -208,8 +208,8 @@ resource "aws_ebs_volume" "linux_log_default" {
 
   tags = {
     "Name"      = local.prefix_name
-    "Stack"     = local.common_tags.stack
-    "Managedby" = local.common_tags.managedby
+    "Stack"     = local.common_tags.Stack
+    "Managedby" = local.common_tags.Managedby
   }
 
 }
@@ -232,8 +232,8 @@ resource "aws_ebs_volume" "linux_backup_default" {
 
   tags = {
     "Name"      = local.prefix_name
-    "Stack"     = local.common_tags.stack
-    "Managedby" = local.common_tags.managedby
+    "Stack"     = local.common_tags.Stack
+    "Managedby" = local.common_tags.Managedby
   }
 
 }
@@ -256,8 +256,8 @@ resource "aws_ebs_volume" "linux_temp_default" {
 
   tags = {
     "Name"      = local.prefix_name
-    "Stack"     = local.common_tags.stack
-    "Managedby" = local.common_tags.managedby
+    "Stack"     = local.common_tags.Stack
+    "Managedby" = local.common_tags.Managedby
   }
 
 }
