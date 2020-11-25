@@ -1,6 +1,6 @@
 <powershell>
 
-$instance_id = Invoke-WebRequest "http://169.254.169.254/latest/meta-data/instance-id" | Select-Object -Expand content
+$instance_id = Invoke-WebRequest "http://169.254.169.254/latest/meta-data/instance-id" -UseBasicParsing | Select-Object -Expand content
 $tag_name = aws ec2 describe-instances --instance-ids $instance_id --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value[]' | ConvertFrom-Json
 
 $DN = "alturamso.com"
