@@ -130,6 +130,29 @@ resource "aws_volume_attachment" "temp_default" {
   instance_id = join("", aws_instance.windows.*.id)
 }
 
+resource "aws_ebs_volume" "bin_default" {
+  count             = var.windows_bin_ebs_enabled ? 1 : 0
+  availability_zone = var.availability_zone
+  encrypted         = var.ebs_encrypted
+  kms_key_id        = var.kms_key_id
+  size              = var.bin_volume_size
+  type              = var.bin_volume_type
+  iops              = var.bin_iops
+
+  tags = {
+    "Name"      = "${local.prefix_name} : B"
+    "stack"     = local.common_tags.stack
+    "managedby" = local.common_tags.managedby
+  }
+
+}
+
+resource "aws_volume_attachment" "bin_default" {
+  count       = var.windows_bin_ebs_enabled ? 1 : 0
+  device_name = "/dev/xvde"
+  volume_id   = aws_ebs_volume.bin_default.*.id[count.index]
+  instance_id = join("", aws_instance.windows.*.id)
+}
 
 # ###【LINUX】###
 

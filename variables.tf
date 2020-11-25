@@ -56,6 +56,12 @@ variable "windows_temp_ebs_enabled" {
   default     = false
 }
 
+variable "windows_bin_ebs_enabled" {
+  type        = bool
+  description = "Whether to create the ebs resources. Set to `false` to prevent the module from creating any resources"
+  default     = false
+}
+
 variable "linux_enabled" {
   type        = bool
   description = "Whether to create the resources. Set to `false` to prevent the module from creating any resources"
@@ -212,6 +218,25 @@ variable "temp_volume_type" {
 }
 
 variable "temp_iops" {
+  type        = number
+  description = "The amount of provisioned IOPS. This is only valid for volume_type of 'io1/io2'"
+  default     = null
+}
+
+
+variable "bin_volume_size" {
+  type        = number
+  description = "The size of the drive in GiBs"
+  default     = 60
+}
+
+variable "bin_volume_type" {
+  type        = string
+  description = "The type of volume. 'gp2', 'io1', 'io2', 'sc1', or 'st1'. (Default: 'gp2')."
+  default     = "gp2"
+}
+
+variable "bin_iops" {
   type        = number
   description = "The amount of provisioned IOPS. This is only valid for volume_type of 'io1/io2'"
   default     = null

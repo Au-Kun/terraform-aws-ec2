@@ -29,6 +29,10 @@ module "uat1ez02" {
   temp_volume_size                = var.temp_volume_size
   temp_volume_type                = var.temp_volume_type
   temp_iops                       = var.temp_iops
+  windows_bin_ebs_enabled         = var.windows_bin_ebs_enabled
+  bin_volume_size                 = var.bin_volume_size
+  bin_volume_type                 = var.bin_volume_type
+  bin_iops                        = var.bin_iops
   linux_enabled                   = var.linux_enabled
   linux_user_data                 = var.linux_user_data
   linux_image_id                  = var.linux_image_id
