@@ -32,16 +32,3 @@ data "aws_vpc" "default" {
   default = false
   id      = var.aws_vpc
 }
-
-# data "aws_subnet" "default" {
-#   vpc_id = data.aws_vpc.default.id
-
-#   filter {
-#     name   = "tag:Name"
-#     values = var.subnet_id
-#   }
-# }
-
-# data "template_file" "user_data" {
-#   template = file("${path.module}/scripts/windows.ps1")
-# }
