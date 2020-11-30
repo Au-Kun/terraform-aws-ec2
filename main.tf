@@ -140,7 +140,7 @@ resource "aws_ebs_volume" "bin_default" {
   iops              = var.bin_iops
 
   tags = {
-    "Name"      = "${local.prefix_name} : B"
+    "Name"      = "${local.prefix_name} : S"
     "Stack"     = local.common_tags.Stack
     "Managedby" = local.common_tags.Managedby
   }
