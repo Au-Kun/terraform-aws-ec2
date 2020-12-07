@@ -154,7 +154,7 @@ variable "root_volume_type" {
 variable "root_iops" {
   type        = number
   description = "The amount of provisioned IOPS. This is only valid for volume_type of 'io1/io2'"
-  default     = null
+  default     = 300
 }
 
 variable "root_volume_size" {
