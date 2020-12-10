@@ -1,5 +1,5 @@
 module "example" {
-  source                          = "../../../../../terraform-aws-ec2"
+  source                          = "../../../../terraform-aws-ec2"
   windows_user_data               = var.windows_user_data
   region                          = var.region
   windows_image_id                = var.windows_image_id
