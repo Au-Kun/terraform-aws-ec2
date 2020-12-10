@@ -1,3 +1,5 @@
+# non-prod/example01/variables.tf
+
 variable "region" {
   type        = string
   description = "The AWS Region"
