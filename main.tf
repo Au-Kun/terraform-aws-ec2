@@ -1,3 +1,7 @@
+provider "aws" {
+  region                  = var.region
+}
+
 locals {
   prefix_name = lower(join(var.delimiter, compact(concat(list(var.name, var.stack, var.application_name, var.application_type), var.attributes))))
 }
