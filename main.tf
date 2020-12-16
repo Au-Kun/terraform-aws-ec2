@@ -42,7 +42,7 @@ resource "aws_instance" "windows" {
   }
 
   volume_tags = {
-    "Name"      = "${local.prefix_name}"
+    "Name"      = local.prefix_name
     "Stack"     = local.common_tags.Stack
     "Managedby" = local.common_tags.Managedby
   }
@@ -68,7 +68,7 @@ resource "aws_ebs_volume" "log_default" {
 
 
   tags = {
-    "Name"      = "${local.prefix_name}"
+    "Name"      = local.prefix_name
     "Stack"     = local.common_tags.Stack
     "Managedby" = local.common_tags.Managedby
   }
@@ -92,7 +92,7 @@ resource "aws_ebs_volume" "backup_default" {
   iops              = var.backup_iops
 
   tags = {
-    "Name"      = "${local.prefix_name}"
+    "Name"      = local.prefix_name
     "Stack"     = local.common_tags.Stack
     "Managedby" = local.common_tags.Managedby
   }
@@ -116,7 +116,7 @@ resource "aws_ebs_volume" "temp_default" {
   iops              = var.temp_iops
 
   tags = {
-    "Name"      = "${local.prefix_name}"
+    "Name"      = local.prefix_name
     "Stack"     = local.common_tags.Stack
     "Managedby" = local.common_tags.Managedby
   }
@@ -140,7 +140,7 @@ resource "aws_ebs_volume" "bin_default" {
   iops              = var.bin_iops
 
   tags = {
-    "Name"      = "${local.prefix_name}"
+    "Name"      = local.prefix_name
     "Stack"     = local.common_tags.Stack
     "Managedby" = local.common_tags.Managedby
   }
