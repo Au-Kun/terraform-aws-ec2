@@ -6,11 +6,11 @@ $tag_name = aws ec2 describe-instances --instance-ids $instance_id --query 'Rese
 $DN = "alturamso.com"
 $ServerName = "$tag_name"
 
-# Retreives from Parameter Store
+# Retreives domain username and password from AWS Parameter Store
 $domainuser = (Get-SSMParameter -Name msoAWSDomainUser -WithDecryption $true).Value
 $domainpw = (Get-SSMParameter -Name msoAWSDomainPW -WithDecryption $true).Value
 
-#Set Timezone to PST
+#Set Instance Timezone to PST
 Set-TimeZone -Id "Pacific Standard Time"
 
 #Install AD Module for Powershell

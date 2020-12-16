@@ -8,8 +8,8 @@
 # terraform {
 
 #   backend "s3" {
-#     bucket = "mso-prod-tf-state"
-#     key    = "ec2/AMOMNISRC.tfstate"
+#     bucket = "tf-state"
+#     key    = "ec2/example01.tfstate"
 #     region = "us-west-2"
 #   }
 # }

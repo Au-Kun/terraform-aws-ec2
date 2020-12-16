@@ -11,13 +11,13 @@ variable "owners" {
 variable "linux_image_id" {
   type        = string
   description = "The EC2 image id name to launch"
-  default     = ""
+  default     = "Linux-ami-*"
 }
 
 variable "windows_image_id" {
   type        = string
   description = "The EC2 image id name to launch"
-  default     = ""
+  default     = "Windows-Server-2019-Base-*"
 }
 
 variable "windows_enabled" {
@@ -88,8 +88,8 @@ variable "linux_temp_ebs_enabled" {
 
 variable "instance_type" {
   type        = string
-  description = "List of nested arguments provides the ability to specify multiple instance types"
-  default     = ""
+  description = "Specify instance types (e.g. t2.micro)"
+  default     = "t2.micro"
 }
 
 variable "key_name" {
@@ -113,7 +113,7 @@ variable "instance_termination_protection" {
 
 variable "aws_vpc" {
   type        = string
-  description = "A list of vpc"
+  description = "The vpc id"
   default     = ""
 }
 
@@ -136,11 +136,15 @@ variable "availability_zone" {
 }
 
 variable "windows_user_data" {
+  type        = string
   description = "User data script"
+  default     = "windows_2016"
 }
 
 variable "linux_user_data" {
+  type        = string
   description = "User data script"
+  default     = "linux"
 }
 
 ###【VOLUMES】###
@@ -154,7 +158,7 @@ variable "root_volume_type" {
 variable "root_iops" {
   type        = number
   description = "The amount of provisioned IOPS. This is only valid for volume_type of 'io1/io2'"
-  default     = 300
+  default     = 0
 }
 
 variable "root_volume_size" {
@@ -196,13 +200,13 @@ variable "log_volume_type" {
 variable "log_iops" {
   type        = number
   description = "The amount of IOPS to provision for the disk. Only valid for type of io1 or io2"
-  default     = null
+  default     = 0
 }
 
 variable "backup_iops" {
   type        = number
   description = "The amount of provisioned IOPS. This is only valid for volume_type of 'io1/io2'"
-  default     = null
+  default     = 0
 }
 
 variable "temp_volume_size" {
@@ -220,7 +224,7 @@ variable "temp_volume_type" {
 variable "temp_iops" {
   type        = number
   description = "The amount of provisioned IOPS. This is only valid for volume_type of 'io1/io2'"
-  default     = null
+  default     = 0
 }
 
 
@@ -239,7 +243,7 @@ variable "bin_volume_type" {
 variable "bin_iops" {
   type        = number
   description = "The amount of provisioned IOPS. This is only valid for volume_type of 'io1/io2'"
-  default     = null
+  default     = 0
 }
 
 variable "ebs_device_name" {
