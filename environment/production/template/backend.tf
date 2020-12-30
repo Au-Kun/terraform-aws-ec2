@@ -7,7 +7,7 @@ provider "aws" {
 terraform {
 
   backend "s3" {
-    bucket  = "mso-prod-tf-state"
+    bucket  = "prod-tf-state"
     key     = "ec2/example_test.tfstate"
     region  = "us-west-2"
     profile = "production"
