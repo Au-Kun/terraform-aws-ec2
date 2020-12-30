@@ -26,7 +26,7 @@ resource "aws_instance" "windows" {
   vpc_security_group_ids  = var.security_groups
   subnet_id               = var.subnet_id
   user_data               = filebase64("${path.cwd}/scripts/${var.windows_user_data}.ps1")
-  iam_instance_profile    = aws_iam_instance_profile.ec2_profile.name
+  iam_instance_profile    = aws_iam_instance_profile.default_profile.name
   availability_zone       = var.availability_zone
   get_password_data       = true
 
