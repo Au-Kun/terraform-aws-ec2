@@ -1,4 +1,5 @@
 # IAM ROLE BEING CALLED FROM WITHIN TERRAGRUNT MODULE-FOR PURPOSES TESTING...
+# UNCOMMENT IF YOU DO NOT USE TERRAGRUNT
 
 # # Create Instance Profile Role
 # resource "aws_iam_instance_profile" "default_profile" {
