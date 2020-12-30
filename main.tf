@@ -167,7 +167,7 @@ resource "aws_instance" "linux" {
   vpc_security_group_ids  = var.security_groups
   subnet_id               = var.subnet_id
   user_data               = filebase64("${path.cwd}/scripts/${var.linux_user_data}.sh")
-  iam_instance_profile    = aws_iam_instance_profile.ec2_profile.name
+  iam_instance_profile    = aws_iam_instance_profile.default_profile.name
   availability_zone       = var.availability_zone
 
 
