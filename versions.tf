@@ -1,5 +1,5 @@
 # NOTE: DOESN'T NEED TO BE IN ROOT MODULE, BUT INCLUDE THIS FILE IN YOUR MODULE
-#
+
 # provider "aws" {
 #   region                  = var.region
 #   shared_credentials_file = "~/.aws/credentials"
